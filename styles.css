@@ -1,0 +1,68 @@
+/* Reset some default styling */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
+}
+
+/* Center the model containers on the page */
+.model-container {
+    display: inline-block;
+    margin: 20px;
+    text-align: center;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    max-width: 300px; /* Add a maximum width to control container width */
+    height: 400px; /* Set a fixed height for the container */
+    overflow: auto; /* Add scrollbars if content overflows the container */
+}
+
+.icon {
+  background: url('file\ zilla\ logo.glb');
+  height: 20px;
+  width: 20px;
+  display: block;
+  /* Other styles here */
+}
+
+
+
+/* Style the h1 elements within the containers */
+.model-container h1 {
+    font-size: 18px;
+    margin: 10px 0;
+}
+
+/* Style the paragraph text within the containers */
+.model-container p {
+    font-size: 14px; /* Adjust the font size as needed */
+    margin: 10px 0;
+    word-wrap: break-word; /* Wrap text within the container */
+}
+
+/* Style the <model-viewer> elements */
+model-viewer {
+    width: 100%; /* Adjust the width to fit your layout */
+    height: 300px; /* Adjust the height to fit your layout */
+}
+
+
+
+
+  #goToPageButton {
+    background-color: #0074d9; /* Button background color */
+    color: #fff; /* Text color */
+    padding: 10px 20px; /* Padding around the text */
+    border: none; /* Remove button border */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Show pointer cursor on hover */
+    font-size: 16px; /* Font size */
+  }
+  
+  #goToPageButton:hover {
+    background-color: #0056b3; /* Change background color on hover */
+  }
+  

@@ -1,0 +1,503 @@
+<html>
+
+<head>
+    <title>Web AR</title> <!-- Sets the title of the web page to "Web AR" -->
+    <meta charset="utf-8"> <!-- Defines the character encoding for the document as UTF-8 -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Specifies compatibility settings for Internet Explorer -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
+
+    <style>
+        .vertical-line {
+            border-left: 2px solid red;
+            /* Change the color as needed */
+            height: 70px;
+            /* Adjust the height as needed */
+            margin: 0 20px;
+            margin-left: 85%;
+            margin-top: 6%;
+            position: absolute;
+            /* Adjust the margin as needed */
+        }
+
+        /* Add CSS for the containers holding the model-viewer elements */
+        .model-viewer-container {
+            display: inline-block;
+            width: 30%;
+            /* Adjust the width as needed */
+            margin: 10px;
+            /* Add spacing between the containers */
+        }
+
+        /* Style the model-viewer elements if necessary */
+        model-viewer {
+            width: 100%;
+            height: 300px;
+            /* Adjust the height as needed */
+        }
+
+
+        .connector {
+            width: 65%;
+            /* Full width for the horizontal line */
+            height: 1px;
+            /* Adjust the height of the connector line */
+            background-color: blue;
+            /* Adjust the color as needed */
+            position: absolute;
+            margin-left: 21%;
+            top: 120px;
+            /* Adjust the top position to separate it from the models */
+        }
+
+
+        /* CSS for the slanted line container */
+        .slanted-line-container {
+            width: 45%;
+            /* Adjust the width of the line */
+            height: 1px;
+            /* Adjust the height as needed */
+            background: linear-gradient(135deg, transparent 20px, red 20px);
+            transform: rotate(930deg);
+            /* Rotate the line to be vertical */
+            margin: 75px 700px;
+            /* Adjust the margin as needed */
+        }
+
+        #getData {
+            width: 250px;
+            height: 200px;
+            padding: 10px;
+            border: 1px solid #000000;
+        }
+
+        .row1 {
+            display: flex;
+
+        }
+
+
+        @keyframes moveAndSlant {
+            0% {
+                transform: translateY(0) rotate(0deg);
+            }
+
+            25% {
+                transform: translateY(-50px) rotate(0deg);
+            }
+
+            50% {
+                transform: translateY(-450px) translateX(-600px) rotate(0deg);
+            }
+
+            100% {
+                transform: translateY(-450px) translateX(0) rotate(0deg);
+                display: none;
+            }
+
+        }
+
+        #sendFileModel {
+            animation: moveAndSlant 30s ease-in-out forwards;
+        }
+    </style>
+
+    <script>
+        function allowDrop(even) {
+            even.preventDefault();
+        }
+
+        function drag(even) {
+            even.dataTransfer.setData("text", even.target.id);
+        }
+
+        function drop(even) {
+            even.preventDefault();
+            var fetchData = even.dataTransfer.getData("text");
+            even.target.appendChild(document.getElementById(fetchData));
+
+            var dropArea = document.getElementById(fetchData);
+
+            // Check if the drop area already has child elements
+            if (dropArea.hasChildNodes()) {
+                console.log("Something is not there in the drop area");
+            } else {
+                //dropArea.appendChild(document.getElementById(fetchData));
+                console.log("Something is already in the drop area");
+                startUploadingFile();
+            }
+        }
+    </script>
+
+    <!-- Include the model-viewer JavaScript module -->
+    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+
+</head>
+
+<body>
+    <!-- Inserts a line break (not visible on the page) -->
+    <br>
+    <div>
+        <center>
+            <h1>File Transfer Protocols</h1> <!-- Heading element -->
+
+            <br>
+        </center>
+
+    </div>
+    <hr>
+    <!-- Container for the first model-viewer -->
+    <div class="model-viewer-container">
+        <model-viewer src="laptop (3).glb" ar ar-modes="webxr scene-viewer quick-look" camera-controls
+            poster="poster.webp" shadow-intensity="1" id="FtpClientLaptop">
+            <button class="Hotspot" slot="hotspot-3"
+                data-position="10.066504518301514m 69.27750186888898m 718.4284188104473m"
+                data-normal="0m 0.4745439042365091m 0.8802318347753455m" data-visibility-attribute="visible">
+                <div class="HotspotAnnotation">Windows OS Laptop - FTP Client</div>
+            </button>
+        </model-viewer>
+    </div>
+
+    <div class="connector" style="margin-top: 190px;"></div>
+
+    <!-- Similar containers for other model-viewer elements -->
+    <div class="model-viewer-container">
+        <model-viewer src="clouds.glb" ar ar-modes="webxr scene-viewer quick-look" camera-controls poster="poster.webp"
+            shadow-intensity="1" id="Internet">
+            <button class="Hotspot" slot="hotspot-1"
+                data-position="0.021139424536606555m 0.6409815286517468m 0.9921792207816147m"
+                data-normal="0.23496108120487436m 0.7867027274389705m 0.5708696076680921m"
+                data-visibility-attribute="visible">
+                <div class="HotspotAnnotation">Internet</div>
+            </button>
+        </model-viewer>
+    </div>
+
+    <div class="model-viewer-container">
+        <model-viewer src="server_racking_system.glb" ar ar-modes="webxr scene-viewer quick-look" camera-controls
+            poster="poster.webp" shadow-intensity="1" id="FtpServer"
+            style="margin-left: 20%;"
+            >
+            <button class="Hotspot" slot="hotspot-1"
+                data-position="-0.2986763782425904m 1.905029363515141m 0.5064332606660245m"
+                data-normal="7.450818835722137e-7m -0.18521761207126647m 0.9826975303612311m"
+                data-visibility-attribute="visible">
+                <div class="HotspotAnnotation">FTP Server</div>
+            </button>
+        </model-viewer>
+    </div>
+
+
+    <!-- Slanted line container -->
+    <div class="slanted-line-container"></div>
+    <div class="vertical-line"></div>
+    <div class="model-viewer-container" style="margin-left:69% ;margin-top: -10%;">
+        <model-viewer src="laptop (3).glb" ar ar-modes="webxr scene-viewer quick-look" camera-controls
+            poster="poster.webp" shadow-intensity="1" id="FileUploaderUser" onclick="changeModel('FileUploaderUser')">
+
+            <button class="Hotspot" slot="hotspot-3"
+                data-position="10.066504518301514m 69.27750186888898m 718.4284188104473m"
+                data-normal="0m 0.4745439042365091m 0.8802318347753455m" data-visibility-attribute="visible">
+                <div class="HotspotAnnotation">Windows OS Laptop - File Uploader User</div>
+            </button>
+        </model-viewer>
+    </div>
+
+
+    <model-viewer src="file send.glb" ar ar-modes="webxr scene-viewer quick-look" camera-controls poster="poster.webp"
+        shadow-intensity="1" style="width: 20%;height: 10%;margin-left: 75%;margin-top: -15px;display: none;"
+        id="sendFileModel">
+        <button class="Hotspot" slot="hotspot-1"
+            data-position="-12.564957121488849m 10.362344736349417m -2.3009027430796833e-15m"
+            data-normal="4.930380657631324e-32m 2.220446049250313e-16m 1m" data-visibility-attribute="visible">
+            <div class="HotspotAnnotation" id="fileName" style="font-size: smaller;">File</div>
+        </button>
+
+    </model-viewer>
+
+
+
+    <div class="model-viewer-container">
+
+
+        <input type="image" src="filezilla-logo.jpg" style="width: 50%;margin-left: 250%;margin-top: -100px;"
+            onclick="addHelloText()" />
+
+    </div>
+    <br>
+    <div style="display: flex;">
+        <div class="model-viewer-container" id="additionalContent" style="display:none; 
+            width: 40%;margin: 10px;">
+
+            <model-viewer src="scene.glb" ar ar-modes="webxr scene-viewer quick-look" camera-controls
+                poster="poster.webp" shadow-intensity="1" id="FilezillaUiModel">
+                <button class="Hotspot" slot="hotspot-1"
+                    data-position="-4.273209877942665m 9.232735615364549m 1.6698458908773008m"
+                    data-normal="4.930380657631324e-32m 2.220446049250313e-16m 1m" data-visibility-attribute="visible">
+                    <div class="HotspotAnnotation">FileZilla is a free and open-source, cross-platform FTP application
+                    </div>
+                </button><button class="Hotspot" slot="hotspot-3"
+                    data-position="3.3362253998315037m -0.3355734574630336m 1.6698458908773102m"
+                    data-normal="4.930380657631324e-32m 2.220446049250313e-16m 1m" data-visibility-attribute="visible">
+                    <div class="HotspotAnnotation">FileZilla Server</div>
+                </button><button class="Hotspot" slot="hotspot-4"
+                    data-position="-5.178653202524034m -0.519651980137122m 1.669845890877303m"
+                    data-normal="4.930380657631324e-32m 2.220446049250313e-16m 1m" data-visibility-attribute="visible">
+                    <div class="HotspotAnnotation">FileZilla Client</div>
+                </button>
+
+            </model-viewer>
+
+
+
+        </div>
+
+
+        <!-- File Upload Button -->
+        <input type="file" id="fileInput" style="display: none;">
+        <button id="additionalContent1" style="display:none;height:50%;" onclick="uploadFile()"
+            class="btn btn-outline-danger btn-sm"><b>SELECT FILE</b></button>
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        <h6 id="additionalContent2" style="display: none;">Drag Your Local File inside FileZilla server:</h6>
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        <div id="additionalContent3" style="display: none;">
+            <div id="getData" ondrop="drop(event)" ondragover="allowDrop(event)">
+            </div>
+
+            <img id="dragData" draggable="true" ondragstart="drag(event)" width="180" height="180">
+        </div>
+
+        <!-- File Download Link -->
+
+        <!-- <a href="#" id="downloadLink" style="display: none;">Check the file</a> -->
+
+
+    </div>
+
+    </div>
+
+
+
+
+
+    <!-- Add more containers for other model-viewer elements if needed -->
+
+
+    <!-- <model-viewer src="web browser.glb" ar ar-modes="webxr scene-viewer quick-look" camera-controls poster="poster.webp"
+        shadow-intensity="1">
+        <button class="Hotspot" slot="hotspot-1"
+            data-position="-0.13689415332821078m 0.12186897488535386m 0.19280299544334412m" data-normal="0m 0m 1m"
+            data-visibility-attribute="visible">
+            <div class="HotspotAnnotation">Web Browser</div>
+        </button><button class="Hotspot" slot="hotspot-2"
+            data-position="1.8159907378996323m 16.8075730352167m 0.0640539973974299m" data-normal="0m 0m 1m"
+            data-visibility-attribute="visible">
+            <div class="HotspotAnnotation">Address bar</div>
+        </button>
+
+    </model-viewer> -->
+
+
+
+
+
+
+
+
+
+    <!-- <model-viewer src="windows_10_file_icons.glb" ios-src="file.usdz"
+            poster="https://raw.githubusercontent.com/lightlessdays/web-ar/main/loading_screen.gif" alt="file 3D model"
+            shadow-intensity="2" camera-controls auto-rotate ar>
+            <button class="Hotspot" slot="hotspot-1"
+                data-position="0.15804331496541962m 1.7888739832518574m 2.284389130306158m"
+                data-normal="0.9077774858792493m -4.480441241989126e-8m -0.4194520665472366m"
+                data-visibility-attribute="visible">
+                <div class="HotspotAnnotation">Image File</div>
+            </button><button class="Hotspot" slot="hotspot-2"
+                data-position="-0.3669664140055543m 0.10960115771790768m -0.017720159843123806m"
+                data-normal="0.9999999999999987m -4.51227161747967e-9m 5.3123213342641044e-8m"
+                data-visibility-attribute="visible">
+                <div class="HotspotAnnotation">MP3 File</div>
+            </button><button class="Hotspot" slot="hotspot-3"
+                data-position="-0.005202307387719096m 1.8524361441146342m -1.9316275758294754m"
+                data-normal="0.906307761491099m -8.94414812229857e-8m 0.42261831652329657m"
+                data-visibility-attribute="visible">
+                <div class="HotspotAnnotation">Exe File</div>
+            </button> </model-viewer>-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <script>
+        // Use setTimeout to display an alert after 5 seconds
+        setTimeout(function () {
+            alert("Let's Start Transferring File using FTP(File Tranfer Protocol) in AR World!! Click on FileZilla FTP Application.");
+        }, 7000); // 7000 milliseconds (7 seconds)
+
+
+
+
+
+        // Function to set the visibility of hotspots
+        function setHotspotVisibility(visibility) {
+            const hotspots = document.querySelectorAll('.Hotspot');
+            hotspots.forEach(hotspot => {
+                hotspot.setAttribute('data-visibility-attribute', visibility ? 'visible' : 'hidden');
+            });
+        }
+
+        // Use a variable to track whether "Hello" has been displayed
+        var helloDisplayed = false;
+        function addHelloText() {
+
+            if (!helloDisplayed) {
+                document.getElementById('additionalContent').style.display = 'inline-block';
+
+                // Update the variable to indicate that "Hello" has been displayed
+                helloDisplayed = true;
+                alert("In the future, scroll down and click on the FileZilla Application UI model which says that FileZilla is a free and open-source, cross-platform FTP application.");
+
+            }
+        }
+
+        // Use a variable to track whether "Hello" has been displayed
+        var OptionsDisplayed = false;
+
+
+
+        function uploadFile() {
+            // Trigger the file input click
+            document.getElementById('fileInput').click();
+        }
+
+        function downloadFile() {
+            // For demonstration purposes, create a dummy text file and initiate download
+            var text = "This is a sample text file content.";
+            var blob = new Blob([text], { type: 'text/plain' });
+
+            var a = document.createElement('a');
+            a.href = window.URL.createObjectURL(blob);
+            a.download = 'sample.txt';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        }
+
+        // Event listener for file input change
+        document.getElementById('fileInput').addEventListener('change', function (event) {
+            var file = event.target.files[0];
+            console.log('File selected:', file.name);
+
+            // Update the content of the div with the file name
+            var fileNameElement = document.getElementById('fileName');
+            fileNameElement.innerHTML = file.name;
+
+            // Update the image source to the selected file
+            var imgElement = document.getElementById('dragData');
+            imgElement.src = window.URL.createObjectURL(file);
+
+
+            // Show the download link and set its href attribute
+            var downloadLink = document.getElementById('downloadLink');
+            downloadLink.style.display = 'inline';
+            downloadLink.href = window.URL.createObjectURL(file);
+            downloadLink.download = file.name;
+
+
+        });
+
+        const FilezillaUiModel = document.getElementById("FilezillaUiModel");
+
+        // Add click event listeners to each model
+        FilezillaUiModel.addEventListener("click", () => {
+            const userInput = prompt("Enter Server IP Address connect to server:");
+            if (userInput !== null && userInput == 'ftp://192.168.0.8') {
+
+                console.log(userInput)
+
+                alert("You are connected to FTP Server: " + userInput);
+
+                document.getElementById('additionalContent1').style.display = 'inline-block';
+                document.getElementById('additionalContent2').style.display = 'inline-block';
+                document.getElementById('additionalContent3').style.display = 'inline-block';
+
+
+                // Update the variable to indicate that "Hello" has been displayed
+                //OptionsDisplayed = true;
+
+            } else {
+
+                alert("Invalid IP Address: " + userInput + " (Enter to connect: ftp://192.168.0.8)");
+
+                anotherFunction();
+            }
+        });
+
+        function anotherFunction() {
+            // Your code for handling the case when the input doesn't match
+            console.log("Input doesn't match. Calling another function.");
+
+            // Add click event listeners to each model
+            const userInput = prompt("Enter Server IP Address connect to server:");
+            if (userInput !== null && userInput == 'ftp://192.168.0.8') {
+
+                console.log(userInput);
+                alert("You are connected to FTP Server: " + userInput);
+
+                document.getElementById('additionalContent1').style.display = 'inline-block';
+                document.getElementById('additionalContent2').style.display = 'inline-block';
+                document.getElementById('additionalContent3').style.display = 'inline-block';
+
+
+            } else {
+                alert("Invalid IP Address: " + userInput + " (Enter to connect: ftp://192.168.0.8)");
+                anotherFunction();
+            }
+
+        }
+
+
+        function startUploadingFile() {
+            // Assuming your file upload logic goes here
+
+            // After file upload is initiated, make the model viewer visible
+            var modelViewer = document.getElementById('sendFileModel');
+            modelViewer.style.display = 'block';
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            var sendFileModelElement = document.getElementById('sendFileModel');
+
+            sendFileModelElement.addEventListener('animationend', function () {
+                // This will be triggered after the animation completes (after 4 seconds in this case)
+                alert('File Uploaded Successfully!');
+            });
+        });
+
+
+    </script>
+    <!-- Includes a JavaScript module for 3D model viewing -->
+    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+
+</body>
+
+</html>
